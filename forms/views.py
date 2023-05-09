@@ -17,6 +17,8 @@ def create(request):
     return HttpResponseRedirect(reverse_lazy('forms:update_forms', args=[pk]))
 
 def update_forms(request, pk):
+    if request.method == 'POST':
+        print(request.POST)
     try:
         form_data = Form.find(pk)
         return render(request, 'update.html',{

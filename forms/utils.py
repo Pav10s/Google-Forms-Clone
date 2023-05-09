@@ -15,8 +15,6 @@ class Form:
     
     def find(self,pk):
         query = {
-            '-id':ObjectId(pk)
+            '_id':ObjectId(pk)
         }
-        print(col.find(query))
-        print(type(col.find(query)))
         return col.find(query).next()

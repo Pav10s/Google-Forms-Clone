@@ -1,3 +1,4 @@
+{% load form_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,5 +10,25 @@
 <body>
     <h1>Form Base</h1>
     <a href="{%url 'forms:create'%}"><button>Create Form</button></a>
+
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Updated On</th>
+            <th>Created On</th>
+            <th>View</th>
+        </tr>
+
+        {% for form in forms %}
+            {% if form.updated_time %}
+            <tr>
+                <td>{{form.form_data.title}}</td>
+                <td>{{form.updated_time}}</td>
+                <td>{{form.created}}</td>
+                <td><a href="{% url 'forms:update_forms' form|lookup:"_id" %}" target="_blank">Open in new browser</a></td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
 </body>
 </html>

@@ -18,3 +18,16 @@ class Form:
             '_id':ObjectId(pk)
         }
         return col.find(query).next()
+
+    def update(self,pk,form_data):
+        query = {'_id':ObjectId(pk)}
+        updated_value = { 
+            '$set': {
+                'form_data':form_data['formData'],
+                'updated_time': timezone.now()
+            }
+        }
+        col.update_one(query, updated_value)
+
+    def findall(self):
+        return col.find().sort('updated', -1)

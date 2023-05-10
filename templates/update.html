@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
     
 <form action="{% url 'forms:update_forms' pk %}" method="post" id='questionForm'>
@@ -26,3 +28,7 @@
 
 
 {% endblock content %}
+
+{% block script %}\
+<script src="{% static 'forms.js' %}"> </script>
+{% endblock script %}

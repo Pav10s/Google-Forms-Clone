@@ -3,10 +3,15 @@
 {% load static %}
 
 {% block content %}
-    
+<h1>Update Form</h1>
+
+<a href="{% url 'forms:view_form' pk %}" target="_blank"><button>Share</button></a><br><br>
+<a href="{% url 'forms:responses' pk %}" target="_blank"><button>Responses</button></a><br><br>
+
+
 <form action="{% url 'forms:update_forms' pk %}" method="post" id='questionForm'>
     {% csrf_token %}
-    <Button type='submit'>Save</Button>
+    <Button type='submit'>Save</Button><br><br>
 
     <div class="card" id='form-description'>
         <div class="card-header">
@@ -38,6 +43,32 @@
     let children = form.children
     children[2].querySelector('[name=title]').value = "{{form.form_data.title|escapejs}}"
     children[2].querySelector('[name=description]').value = "{{form.form_data.description|escapejs}}"
+
+    {% if form.form_data.data %}
+
+        let addQuestionButtonId = 'addQuestion';
+        let addOptionButtonId, question, option_id;
+        let i = 0;
+    
+        {% with form.form_data.data as questions %}
+
+            {% for questionId, questionData in questions.items %}
+
+                i = {{forloop.counter0|escapejs}}+3;
+                [addQuestionButtonId, addOptionButtonId] = addQuestion(addQuestionButtonId, false);
+
+                children[i].querySelector('.question').value = "{{questionData.questionText|escapejs}}";
+
+                {% for option in questionData.options %}
+                    option_id = addOption(addOptionButtonId);
+                    allopt = children[i].querySelector('.allOptions').children;
+                    allopt[allopt.length-1].querySelector(`#${option_id}`).value = '{{option}}';
+                {% endfor %}
+
+            {% endfor %}
+        {% endwith %}
+
+    {% endif %}
 
 </script>
 

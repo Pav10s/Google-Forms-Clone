@@ -14,7 +14,7 @@
         </div>
         <div class="card-body">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="title" placeholder="title" name='title'>
+                <input type="text" class="form-control" id="title" placeholder="title" name='title' >
                 <label for="title">Form Title</label>
             </div>
             <div class="form-floating">
@@ -25,10 +25,20 @@
         </div>
         <button type='button' id='addQuestion'>Add Question</button>
     </div>
+</form>
 
 
 {% endblock content %}
 
 {% block script %}
 <script src="{% static 'forms.js' %}"> </script>
+
+<script>
+    
+    let children = form.children
+    children[2].querySelector('[name=title]').value = "{{form.form_data.title|escapejs}}"
+    children[2].querySelector('[name=description]').value = "{{form.form_data.description|escapejs}}"
+
+</script>
+
 {% endblock script %}
